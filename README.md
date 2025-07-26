@@ -1076,6 +1076,37 @@ a subroutine call, or program termination. This paradigm of using the parser to 
 object to make control flow decisions and to track execution, and a signalling mechanism to allow the parser to signal
 control flow changes to the Program object, is used consistently throughout the implementation.
 
+## The Python Module (`pythonlib.py`)
+
+This module allows you to embed the PyBasic interpreter into your own Python code — without needing to manually set up the lexer, parser, or program handling. It’s ideal for:
+
+- Custom IDEs or editors  
+- Educational apps for learning BASIC  
+- Embedding BASIC-like scripting in your own tools
+
+### Example Usage
+```python
+from pythonlib import Interpreter
+
+interpreter = Interpreter()
+
+# Add a line to the program
+print(interpreter.process_command('10 PRINT "Hello World"'))
+
+# Run the program
+print(interpreter.process_command('RUN'))
+```
+
+interpreter.process_command(command: str) -> str
+
+This function takes a single string argument — a BASIC-style command — and returns the result as a string.
+
+If the input is a numbered statement (e.g. 10 PRINT "Hello"), it adds it to the program.
+
+If the input is a command like RUN, LIST, NEW, SAVE filename, or LOAD filename, it executes that command.
+
+If there's output (like from LIST or RUN), it's returned as a string.
+
 ## Open issues
 
 * It is not possible to renumber a program. This would require considerable extra functionality.
